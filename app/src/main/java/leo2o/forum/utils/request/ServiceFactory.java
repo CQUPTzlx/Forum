@@ -1,4 +1,4 @@
-package leo2o.forum.request;
+package leo2o.forum.utils.request;
 
 import java.util.HashMap;
 import java.util.Map;
