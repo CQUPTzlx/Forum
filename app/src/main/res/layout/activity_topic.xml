@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/topic_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Topic_username"
+        android:textColor="#00F"
+        android:textSize="35sp" />
+
+    <TextView
+        android:id="@+id/topic_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="这只是一条测试信息。后面的开始省略"
+        android:textSize="25sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="评论数："
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/topic_count_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/count"
+            android:text="234"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="Date"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+
+</LinearLayout>

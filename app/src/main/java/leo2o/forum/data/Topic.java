@@ -1,16 +1,18 @@
-package leo2o.forum;
+package leo2o.forum.data;
 
 import java.util.Date;
 
-public class Comment {
+public class Topic {
 
     private String username;
     private String content;
+    private int cnt;
     private Date date;
 
-    public Comment(String username, String content, Date date) {
+    public Topic(String username, String content, int cnt, Date date) {
         this.username = username;
         this.content = content;
+        this.cnt = cnt;
         this.date = date;
     }
 
@@ -20,6 +22,10 @@ public class Comment {
 
     public String getContent() {
         return content;
+    }
+
+    public int getCnt() {
+        return cnt;
     }
 
     public Date getDate() {

@@ -10,6 +10,7 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:id="@+id/login_back"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="5dp"
@@ -83,7 +84,7 @@
         android:clickable="true"
         android:gravity="right"
         android:text="立即注册   "
-        android:textSize="15sp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:textSize="15sp" />
 
 </LinearLayout>

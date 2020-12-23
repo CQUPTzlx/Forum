@@ -5,20 +5,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import leo2o.forum.adapter.CommentAdapter;
+import leo2o.forum.data.Comment;
+
+public class CommentList extends AppCompatActivity {
 
     private List<Comment> commentList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_comment_list);
         initComments();
         RecyclerView recyclerView = findViewById(R.id.comment_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
