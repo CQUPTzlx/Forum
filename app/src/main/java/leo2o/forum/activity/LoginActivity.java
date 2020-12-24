@@ -1,7 +1,6 @@
 package leo2o.forum.activity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -9,12 +8,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
-
-import leo2o.forum.R;
 import leo2o.forum.databinding.ActivityLoginBinding;
 import leo2o.forum.dto.Response;
-import leo2o.forum.dto.UserForm;
 import leo2o.forum.utils.MyApplication;
 import leo2o.forum.utils.request.ForumService;
 import leo2o.forum.utils.request.ServiceFactory;
@@ -44,9 +39,8 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("login", "click");
             String username = binding.editUsername.getText().toString();
             String password = binding.editPassword.getText().toString();
-            UserForm userForm = new UserForm(username, password);
 
-            service.signin(userForm).enqueue(new Callback<Response<String>>() {
+            service.signin(username, password).enqueue(new Callback<Response<String>>() {
                 @Override
                 public void onResponse(Call<Response<String>> call, retrofit2.Response<Response<String>> response) {
                     if (response.isSuccessful()) {

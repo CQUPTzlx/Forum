@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceFactory {
 
     private static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://localhost:8080/api/")
-            .addConverterFactory()
+            .baseUrl("http://10.0.2.2:8080/api/")
+            .addConverterFactory(GsonConverterFactory.create())
             .build();
 
     private static final Map<Class<?>, Object> cache = new HashMap<>();
