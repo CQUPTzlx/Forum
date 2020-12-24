@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:padding="5dp">
+
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -10,13 +17,14 @@
         android:layout_height="wrap_content"
         android:text="Topic_username"
         android:textColor="#00F"
-        android:textSize="35sp" />
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/topic_content"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="这只是一条测试信息。后面的开始省略"
@@ -55,3 +63,5 @@
 
 
 </LinearLayout>
+
+</androidx.cardview.widget.CardView>
