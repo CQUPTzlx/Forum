@@ -28,7 +28,7 @@ public class CommentListActivity extends AppCompatActivity {
 
     private final List<Comment> commentList = new ArrayList<>();
 
-    private final int topicId = getIntent().getIntExtra("topicId", 0);
+    private int topicId;
 
     private CommentAdapter adapter;
 
@@ -39,6 +39,8 @@ public class CommentListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityPostBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        topicId = getIntent().getIntExtra("topicId", 0);
         initComments();
         RecyclerView recyclerView = findViewById(R.id.comment_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
