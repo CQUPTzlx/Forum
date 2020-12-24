@@ -20,7 +20,8 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="这只是一条测试信息。后面的开始省略"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:clickable="true"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -43,6 +44,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/topic_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
