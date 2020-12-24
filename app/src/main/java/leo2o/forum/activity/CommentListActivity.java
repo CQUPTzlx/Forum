@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +15,7 @@ import leo2o.forum.R;
 import leo2o.forum.adapter.CommentAdapter;
 import leo2o.forum.data.Comment;
 import leo2o.forum.data.Topic;
+import leo2o.forum.databinding.ActivityPostBinding;
 import leo2o.forum.dto.Response;
 import leo2o.forum.utils.request.ForumService;
 import leo2o.forum.utils.request.ServiceFactory;
@@ -26,23 +28,34 @@ public class CommentListActivity extends AppCompatActivity {
 
     private final List<Comment> commentList = new ArrayList<>();
 
+    private final int topicId = getIntent().getIntExtra("topicId", 0);
+
     private CommentAdapter adapter;
+
+    private ActivityPostBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post);
+        binding = ActivityPostBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         initComments();
         RecyclerView recyclerView = findViewById(R.id.comment_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new CommentAdapter(commentList);
         recyclerView.setAdapter(adapter);
+        loadTopic();
         loadComments();
+    }
+
+    private void loadTopic() {
+
     }
 
     private void loadComments() {
 //        service.getTopicList().enqueue(new Callback<Response<>>)
+
     }
 
     private void initComments() {
