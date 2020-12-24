@@ -1,5 +1,7 @@
 package leo2o.forum.dto;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Response<T> {
     private final T data;
     private final int code;
@@ -44,5 +46,15 @@ public class Response<T> {
         public int value() {
             return this.code;
         }
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "Response{" +
+                "data=" + data +
+                ", code=" + code +
+                ", message='" + message + '\'' +
+                '}';
     }
 }

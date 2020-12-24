@@ -1,12 +1,18 @@
 package leo2o.forum.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 
 import leo2o.forum.databinding.ActivityLoginBinding;
 import leo2o.forum.dto.Response;
@@ -30,6 +36,21 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.btnLogin.setOnClickListener(new LoginListener());
+
+        binding.loginBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        binding.fastRegister.setClickable(true);
+        binding.fastRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext())
+            }
+        });
     }
 
     class LoginListener implements View.OnClickListener {
@@ -42,13 +63,14 @@ public class LoginActivity extends AppCompatActivity {
 
             service.signin(username, password).enqueue(new Callback<Response<String>>() {
                 @Override
-                public void onResponse(Call<Response<String>> call, retrofit2.Response<Response<String>> response) {
+                public void onResponse(@NotNull Call<Response<String>> call, @NotNull retrofit2.Response<Response<String>> response) {
                     if (response.isSuccessful()) {
                         Response<String> res = response.body();
                         if (res.getCode() == Response.Status.SUCCESS.value()) {
-                            Toast.makeText(MyApplication.getContext(), res.getData(), Toast.LENGTH_LONG).show();
+                            Intent toMainPage = new Intent(v.getContext(), TopicListActivity.class);
+                            startActivity(toMainPage);
                         } else {
-                            Toast.makeText(MyApplication.getContext(), res.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(v.getContext(), res.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     } else {
                         //404 500
