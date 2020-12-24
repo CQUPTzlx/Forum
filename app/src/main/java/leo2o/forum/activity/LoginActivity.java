@@ -37,19 +37,12 @@ public class LoginActivity extends AppCompatActivity {
 
         binding.btnLogin.setOnClickListener(new LoginListener());
 
-        binding.loginBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        binding.loginBack.setOnClickListener(v -> finish());
 
         binding.fastRegister.setClickable(true);
-        binding.fastRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext())
-            }
+        binding.fastRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(),RegisterActivity.class);
+            startActivity(intent);
         });
     }
 
