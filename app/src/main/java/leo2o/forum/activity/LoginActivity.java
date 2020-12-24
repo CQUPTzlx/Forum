@@ -3,6 +3,7 @@ package leo2o.forum.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -39,7 +40,15 @@ public class LoginActivity extends AppCompatActivity {
         binding.loginBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
+            }
+        });
 
+        binding.fastRegister.setClickable(true);
+        binding.fastRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext())
             }
         });
     }
