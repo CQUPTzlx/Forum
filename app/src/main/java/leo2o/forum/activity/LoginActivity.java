@@ -27,11 +27,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private final ForumService service = ServiceFactory.getService(ForumService.class);
 
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        setContentView(R.layout.activity_login);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         binding.btnLogin.setOnClickListener(new LoginListener());
     }
@@ -40,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
+            Log.d("login", "click");
             String username = binding.editUsername.getText().toString();
             String password = binding.editPassword.getText().toString();
             UserForm userForm = new UserForm(username, password);
@@ -47,12 +49,21 @@ public class LoginActivity extends AppCompatActivity {
             service.signin(userForm).enqueue(new Callback<Response<String>>() {
                 @Override
                 public void onResponse(Call<Response<String>> call, retrofit2.Response<Response<String>> response) {
-
+                    if (response.isSuccessful()) {
+                        Response<String> res = response.body();
+                        if (res.getCode() == Response.Status.SUCCESS.value()) {
+                            Toast.makeText(MyApplication.getContext(), res.getData(), Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(MyApplication.getContext(), res.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        //404 500
+                    }
                 }
 
                 @Override
                 public void onFailure(Call<Response<String>> call, Throwable t) {
-                    Toast.makeText(MyApplication.getContext(),  "登录错误！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MyApplication.getContext(),  "网络异常！", Toast.LENGTH_LONG).show();
                     Log.d("login", t.toString());
                 }
             });
