@@ -1,5 +1,6 @@
 package leo2o.forum.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +35,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.btnLogin.setOnClickListener(new LoginListener());
+
+        binding.loginBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     class LoginListener implements View.OnClickListener {
@@ -50,9 +58,10 @@ public class LoginActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         Response<String> res = response.body();
                         if (res.getCode() == Response.Status.SUCCESS.value()) {
-                            Toast.makeText(MyApplication.getContext(), res.getData(), Toast.LENGTH_LONG).show();
+                            Intent toMainPage = new Intent(v.getContext(), TopicListActivity.class);
+                            startActivity(toMainPage);
                         } else {
-                            Toast.makeText(MyApplication.getContext(), res.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(v.getContext(), res.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     } else {
                         //404 500
