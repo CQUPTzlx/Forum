@@ -2,20 +2,27 @@ package leo2o.forum.data;
 
 import java.util.Date;
 
+import leo2o.forum.dto.UserDto;
+
 public class Comment {
 
-    private String username;
-    private String content;
-    private Date date;
+    public final int id;
+    public final int pid;
+    public final UserDto user;
+    public final String content;
+    public final Date date;
 
-    public Comment(String username, String content, Date date) {
-        this.username = username;
+    public Comment(int id, int pid, UserDto user, String content, Date date) {
+
+        this.id = id;
+        this.pid = pid;
+        this.user = user;
         this.content = content;
         this.date = date;
     }
 
     public String getUsername() {
-        return username;
+        return user.getUsername();
     }
 
     public String getContent() {
