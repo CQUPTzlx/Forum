@@ -8,6 +8,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+
 import leo2o.forum.databinding.ActivityLoginBinding;
 import leo2o.forum.dto.Response;
 import leo2o.forum.utils.MyApplication;
@@ -42,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
             service.signin(username, password).enqueue(new Callback<Response<String>>() {
                 @Override
-                public void onResponse(Call<Response<String>> call, retrofit2.Response<Response<String>> response) {
+                public void onResponse(@NotNull Call<Response<String>> call, @NotNull retrofit2.Response<Response<String>> response) {
                     if (response.isSuccessful()) {
                         Response<String> res = response.body();
                         if (res.getCode() == Response.Status.SUCCESS.value()) {

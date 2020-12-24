@@ -16,4 +16,7 @@ public interface ForumService {
     @POST("signup")
     Call<Response<String>> signup(@Field("username") String username, @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST("post")
+    Call<Response<String>> addPost(@Field("content") String content);
 }
