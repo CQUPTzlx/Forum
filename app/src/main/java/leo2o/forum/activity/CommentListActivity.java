@@ -13,21 +13,36 @@ import java.util.List;
 import leo2o.forum.R;
 import leo2o.forum.adapter.CommentAdapter;
 import leo2o.forum.data.Comment;
+import leo2o.forum.data.Topic;
+import leo2o.forum.dto.Response;
+import leo2o.forum.utils.request.ForumService;
+import leo2o.forum.utils.request.ServiceFactory;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class CommentListActivity extends AppCompatActivity {
 
-    private List<Comment> commentList = new ArrayList<>();
+    ForumService service = ServiceFactory.getService(ForumService.class);
+
+    private final List<Comment> commentList = new ArrayList<>();
+
+    private CommentAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment_list);
+        setContentView(R.layout.activity_post);
         initComments();
         RecyclerView recyclerView = findViewById(R.id.comment_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        CommentAdapter adapter = new CommentAdapter(commentList);
+        adapter = new CommentAdapter(commentList);
         recyclerView.setAdapter(adapter);
+        loadComments();
+    }
+
+    private void loadComments() {
+//        service.getTopicList().enqueue(new Callback<Response<>>)
     }
 
     private void initComments() {
