@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,15 +43,25 @@ public class TopicListActivity extends AppCompatActivity {
         adapter = new TopicAdapter(topicList);
         recyclerView.setAdapter(adapter);
         loadTopics();
+
+        FloatingActionButton addButton = findViewById(R.id.add_button);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), PostAddActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    private void loadTopics() {
+    public void loadTopics() {
         service.getTopicList().enqueue(new Callback<Response<List<Topic>>>() {
             @Override
             public void onResponse(Call<Response<List<Topic>>> call, retrofit2.Response<Response<List<Topic>>> response) {
                 if (response.isSuccessful()) {
                     Response<List<Topic>> res = response.body();
                     if (res.isSuccess()) {
+                        res.getData().sort((t1, t2) -> t2.updateDate.compareTo(t1.updateDate));
                         topicList.addAll(res.getData());
                         adapter.notifyDataSetChanged();
                     } else {
