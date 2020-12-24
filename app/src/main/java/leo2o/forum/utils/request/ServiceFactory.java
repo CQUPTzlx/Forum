@@ -9,6 +9,7 @@ public class ServiceFactory {
 
     private static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://localhost:8080/api/")
+            .addConverterFactory()
             .build();
 
     private static final Map<Class<?>, Object> cache = new HashMap<>();
