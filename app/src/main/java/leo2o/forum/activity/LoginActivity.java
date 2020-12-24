@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Response<String>> call, Throwable t) {
-                    Toast.makeText(MyApplication.getContext(),  "网络异常！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MyApplication.getContext(), "网络异常！", Toast.LENGTH_LONG).show();
                     Log.d("login", t.toString());
                 }
             });
