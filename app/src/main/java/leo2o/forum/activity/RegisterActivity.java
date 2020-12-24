@@ -2,6 +2,7 @@ package leo2o.forum.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -55,8 +56,9 @@ public class RegisterActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             Response<String> res = response.body();
                             if (res.getCode() == Response.Status.SUCCESS.value()) {
-                                Toast.makeText(MyApplication.getContext(), res.getData(), Toast.LENGTH_LONG).show();
-
+//                                Toast.makeText(MyApplication.getContext(), res.getData(), Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(v.getContext(),LoginActivity.class);
+                                startActivity(intent);
                             } else {
                                 Toast.makeText(MyApplication.getContext(), res.getMessage(), Toast.LENGTH_LONG).show();
                             }
