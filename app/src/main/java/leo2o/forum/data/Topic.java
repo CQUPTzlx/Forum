@@ -4,16 +4,22 @@ import java.util.Date;
 
 public class Topic {
 
-    private String username;
-    private String content;
-    private int cnt;
-    private Date date;
+    public final int id;
+    public final int uid;
+    public final String username;
+    public final Date createDate;
+    public final Date updateDate;
+    public final String content;
+    public final int commentCount;
 
-    public Topic(String username, String content, int cnt, Date date) {
+    public Topic(String username, String content, int cnt, Date date, int id, int uid, Date createDate, Date updateDate, int commentCount) {
         this.username = username;
         this.content = content;
-        this.cnt = cnt;
-        this.date = date;
+        this.id = id;
+        this.uid = uid;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+        this.commentCount = commentCount;
     }
 
     public String getUsername() {
@@ -24,11 +30,23 @@ public class Topic {
         return content;
     }
 
-    public int getCnt() {
-        return cnt;
+    public int getCommentCount() {
+        return commentCount;
     }
 
-    public Date getDate() {
-        return date;
+    public int getId() {
+        return id;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
     }
 }

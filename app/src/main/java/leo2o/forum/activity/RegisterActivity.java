@@ -29,6 +29,10 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         binding.btnRegister.setOnClickListener(new RegisterListener());
 
+        binding.registerBack.setOnClickListener((v) -> {
+            finish();
+        });
+
     }
 
     private class RegisterListener implements View.OnClickListener {

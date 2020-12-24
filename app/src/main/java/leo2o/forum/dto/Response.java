@@ -14,6 +14,10 @@ public class Response<T> {
         this.message = message;
     }
 
+    public boolean isSuccess() {
+        return this.code == Status.SUCCESS.value();
+    }
+
     public T getData() {
         return data;
     }

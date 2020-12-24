@@ -50,8 +50,8 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
         Topic topic = topicList.get(position);
         holder.topicUsername.setText(topic.getUsername());
         holder.topicContent.setText(topic.getContent());
-        holder.topicCntComment.setText(String.valueOf(topic.getCnt()));
-        holder.topicDate.setText(topic.getDate().toString());
+        holder.topicCntComment.setText(String.valueOf(topic.getCommentCount()));
+        holder.topicDate.setText(topic.getUpdateDate().toString());
     }
 
     @Override
