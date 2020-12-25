@@ -49,6 +49,8 @@ public class TopicListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_user) {
             //跳转到UserInfo
+            Intent intent = new Intent(this, InfoActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

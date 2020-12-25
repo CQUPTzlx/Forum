@@ -5,11 +5,13 @@ import java.util.List;
 import leo2o.forum.data.Comment;
 import leo2o.forum.data.Topic;
 import leo2o.forum.dto.Response;
+import leo2o.forum.dto.UserDto;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ForumService {
@@ -38,4 +40,13 @@ public interface ForumService {
     @FormUrlEncoded
     @POST("post/{pid}/comment")
     Call<Response<Comment>> comment(@Path("pid") int topicId, @Field("content") String content);
+
+    @FormUrlEncoded
+    @PUT("user/username")
+    Call<Response<UserDto>> updateUsername(@Field("newUsername") String newUsername);
+
+    @FormUrlEncoded
+    @PUT("user/password")
+    Call<Response<UserDto>> updatePassword(@Field("newPassword") String newPassword);
+
 }

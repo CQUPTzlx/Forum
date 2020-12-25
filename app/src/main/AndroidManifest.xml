@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Forum">
+        <activity android:name=".activity.InfoActivity"/>
         <activity android:name=".activity.PostAddActivity"/>
         <activity android:name=".activity.RegisterActivity"/>
         <activity android:name=".activity.CommentListActivity" />
