@@ -1,11 +1,16 @@
 package leo2o.forum.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -32,11 +37,32 @@ public class TopicListActivity extends AppCompatActivity {
 
     private static TopicAdapter adapter;
 
+    private SwipeRefreshLayout refreshLayout;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_user) {
+            //跳转到UserInfo
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_list);
-        initTopics();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+//        initTopics();
         RecyclerView recyclerView = findViewById(R.id.topic_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -50,6 +76,14 @@ public class TopicListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), PostAddActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        refreshLayout = findViewById(R.id.refresh);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadTopics();
             }
         });
     }
@@ -67,8 +101,10 @@ public class TopicListActivity extends AppCompatActivity {
                     Response<List<Topic>> res = response.body();
                     if (res.isSuccess()) {
                         res.getData().sort((t1, t2) -> t2.updateDate.compareTo(t1.updateDate));
+                        topicList.clear();
                         topicList.addAll(res.getData());
                         adapter.notifyDataSetChanged();
+                        refreshLayout.setRefreshing(false);
                     } else {
                         Toast.makeText(MyApplication.getContext(), res.getMessage(), Toast.LENGTH_LONG).show();
                     }
