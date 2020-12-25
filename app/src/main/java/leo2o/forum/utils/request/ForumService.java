@@ -49,4 +49,7 @@ public interface ForumService {
     @PUT("user/password")
     Call<Response<UserDto>> updatePassword(@Field("newPassword") String newPassword);
 
+    @GET("user/logout")
+    Call<Response<String>> logout();
+
 }
