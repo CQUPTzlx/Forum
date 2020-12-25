@@ -24,13 +24,28 @@
             android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/post_username"
-                android:layout_width="wrap_content"
-                android:layout_height="28dp"
-                android:gravity="center"
-                android:text="Post_username"
-                android:textSize="18sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/post_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:gravity="center"
+                    android:text="Post_username"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/collect_btn"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/collect_btn_string"
+                    tools:ignore="RelativeOverlap">
+
+                </Button>
+
+            </RelativeLayout>
 
 
 

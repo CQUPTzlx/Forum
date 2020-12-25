@@ -1,6 +1,7 @@
 package leo2o.forum.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,6 +17,7 @@ import java.io.IOException;
 
 import leo2o.forum.databinding.ActivityLoginBinding;
 import leo2o.forum.dto.Response;
+import leo2o.forum.dto.UserDto;
 import leo2o.forum.utils.MyApplication;
 import leo2o.forum.utils.request.ForumService;
 import leo2o.forum.utils.request.ServiceFactory;
@@ -54,13 +56,19 @@ public class LoginActivity extends AppCompatActivity {
             String username = binding.editUsername.getText().toString();
             String password = binding.editPassword.getText().toString();
 
-            service.signin(username, password).enqueue(new Callback<Response<String>>() {
+            service.signin(username, password).enqueue(new Callback<Response<UserDto>>() {
                 @Override
-                public void onResponse(@NotNull Call<Response<String>> call, @NotNull retrofit2.Response<Response<String>> response) {
+                public void onResponse(@NotNull Call<Response<UserDto>> call, @NotNull retrofit2.Response<Response<UserDto>> response) {
                     if (response.isSuccessful()) {
-                        Response<String> res = response.body();
+                        Response<UserDto> res = response.body();
                         if (res.getCode() == Response.Status.SUCCESS.value()) {
+                            SharedPreferences.Editor editor = MyApplication.getContext().getSharedPreferences("user", 0).edit();
+                            editor.putInt("uid", res.getData().getId());
+                            editor.putString("username", res.getData().getUsername());
+                            editor.apply();
+                            finish();
                             Intent toMainPage = new Intent(v.getContext(), TopicListActivity.class);
+                            toMainPage.putExtra("queryType", "all");
                             startActivity(toMainPage);
                         } else {
                             Toast.makeText(v.getContext(), res.getMessage(), Toast.LENGTH_LONG).show();
@@ -71,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<Response<String>> call, Throwable t) {
+                public void onFailure(Call<Response<UserDto>> call, Throwable t) {
                     Toast.makeText(MyApplication.getContext(), "网络异常！", Toast.LENGTH_LONG).show();
                     Log.d("login", t.toString());
                 }

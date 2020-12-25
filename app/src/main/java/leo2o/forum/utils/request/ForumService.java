@@ -18,7 +18,7 @@ public interface ForumService {
 
     @FormUrlEncoded
     @POST("signin")
-    Call<Response<String>> signin(@Field("username") String username, @Field("password") String password);
+    Call<Response<UserDto>> signin(@Field("username") String username, @Field("password") String password);
 
     @FormUrlEncoded
     @POST("signup")
@@ -30,6 +30,13 @@ public interface ForumService {
 
     @GET("post")
     Call<Response<List<Topic>>> getTopicList();
+
+    @GET("collect")
+    Call<Response<List<Topic>>> getCollectTopics();
+
+    @FormUrlEncoded
+    @POST("collect")
+    Call<Response<String>> collect(@Field("pid") int pid);
 
     @GET("post/{pid}")
     Call<Response<Topic>> getTopic(@Path("pid") int topicId);

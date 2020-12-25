@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Forum">
+        <activity android:name=".activity.ChangePasswordActivity"/>
+        <activity android:name=".activity.ChangeUsernameActivity"/>
         <activity android:name=".activity.InfoActivity"/>
         <activity android:name=".activity.PostAddActivity"/>
         <activity android:name=".activity.RegisterActivity"/>

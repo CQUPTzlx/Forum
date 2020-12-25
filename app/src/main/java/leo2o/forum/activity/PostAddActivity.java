@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import leo2o.forum.data.Topic;
 import leo2o.forum.databinding.ActivityAddPostBinding;
 import leo2o.forum.dto.Response;
+import leo2o.forum.utils.ActivityController;
 import leo2o.forum.utils.MyApplication;
 import leo2o.forum.utils.request.ForumService;
 import leo2o.forum.utils.request.ServiceFactory;
@@ -29,6 +30,8 @@ public class PostAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAddPostBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        ActivityController.addActivity(this);
 
         binding.submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
