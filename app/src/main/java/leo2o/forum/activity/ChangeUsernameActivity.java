@@ -2,14 +2,19 @@ package leo2o.forum.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import leo2o.forum.databinding.ActivityChangeUsernameBinding;
+import leo2o.forum.dto.Response;
+import leo2o.forum.dto.UserDto;
 import leo2o.forum.utils.MyApplication;
 import leo2o.forum.utils.request.ForumService;
 import leo2o.forum.utils.request.ServiceFactory;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class ChangeUsernameActivity extends AppCompatActivity {
 
@@ -36,7 +41,27 @@ public class ChangeUsernameActivity extends AppCompatActivity {
                 return;
             }
 
+            service.updateUsername(username).enqueue(new Callback<Response<UserDto>>() {
+                @Override
+                public void onResponse(Call<Response<UserDto>> call, retrofit2.Response<Response<UserDto>> response) {
+                    if (response.isSuccessful()) {
+                        Response<UserDto> res = response.body();
+                        if (res.isSuccess()) {
+                            SharedPreferences.Editor editor = MyApplication.getContext().getSharedPreferences("user", 0).edit();
+                            editor.putString("username", res.getData().getUsername());
+                            editor.apply();
+                            finish();
+                        }
+                    } else {
+                        Toast.makeText(v.getContext(), "修改失败", Toast.LENGTH_LONG).show();
+                    }
+                }
 
+                @Override
+                public void onFailure(Call<Response<UserDto>> call, Throwable t) {
+                    Toast.makeText(v.getContext(), "网络异常", Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 }

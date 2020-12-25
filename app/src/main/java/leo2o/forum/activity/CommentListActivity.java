@@ -19,6 +19,8 @@ import leo2o.forum.data.Comment;
 import leo2o.forum.data.Topic;
 import leo2o.forum.databinding.ActivityPostBinding;
 import leo2o.forum.dto.Response;
+import leo2o.forum.utils.ActivityController;
+import leo2o.forum.utils.UIUpdate;
 import leo2o.forum.utils.request.ForumService;
 import leo2o.forum.utils.request.ServiceFactory;
 import retrofit2.Call;
@@ -41,6 +43,8 @@ public class CommentListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityPostBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        ActivityController.addActivity(this);
 
         topicId = getIntent().getIntExtra("topicId", 0);
 //        initComments();
@@ -74,6 +78,31 @@ public class CommentListActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<Response<Comment>> call, Throwable t) {
+                        Toast.makeText(v.getContext(), "网络异常", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        binding.collectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                service.collect(topicId).enqueue(new Callback<Response<String>>() {
+                    @Override
+                    public void onResponse(Call<Response<String>> call, retrofit2.Response<Response<String>> response) {
+                        if (response.isSuccessful()) {
+                            Response<String> res = response.body();
+                            if (res.isSuccess()) {
+//                                Toast.makeText(v.getContext(), "收藏成功", Toast.LENGTH_SHORT).show();
+                                binding.collectBtn.setText("已收藏");
+                            } else {
+                                Toast.makeText(v.getContext(), res.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Response<String>> call, Throwable t) {
                         Toast.makeText(v.getContext(), "网络异常", Toast.LENGTH_SHORT).show();
                     }
                 });

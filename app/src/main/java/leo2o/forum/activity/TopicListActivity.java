@@ -23,6 +23,7 @@ import leo2o.forum.R;
 import leo2o.forum.adapter.TopicAdapter;
 import leo2o.forum.data.Topic;
 import leo2o.forum.dto.Response;
+import leo2o.forum.utils.ActivityController;
 import leo2o.forum.utils.MyApplication;
 import leo2o.forum.utils.request.ForumService;
 import leo2o.forum.utils.request.ServiceFactory;
@@ -39,6 +40,8 @@ public class TopicListActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout refreshLayout;
 
+    private String queryType;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -48,6 +51,9 @@ public class TopicListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_user) {
+            if ("collect".equals(queryType)) {
+                finish();
+            }
             //跳转到UserInfo
             Intent intent = new Intent(this, InfoActivity.class);
             startActivity(intent);
@@ -60,6 +66,8 @@ public class TopicListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_list);
 
+        ActivityController.addActivity(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -70,6 +78,10 @@ public class TopicListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new TopicAdapter(topicList);
         recyclerView.setAdapter(adapter);
+
+        Intent intent = getIntent();
+        queryType = intent.getStringExtra("queryType");
+
         loadTopics();
 
         FloatingActionButton addButton = findViewById(R.id.add_button);
@@ -96,29 +108,40 @@ public class TopicListActivity extends AppCompatActivity {
     }
 
     public void loadTopics() {
-        service.getTopicList().enqueue(new Callback<Response<List<Topic>>>() {
-            @Override
-            public void onResponse(Call<Response<List<Topic>>> call, retrofit2.Response<Response<List<Topic>>> response) {
-                if (response.isSuccessful()) {
-                    Response<List<Topic>> res = response.body();
-                    if (res.isSuccess()) {
-                        res.getData().sort((t1, t2) -> t2.updateDate.compareTo(t1.updateDate));
-                        topicList.clear();
-                        topicList.addAll(res.getData());
-                        adapter.notifyDataSetChanged();
-                        refreshLayout.setRefreshing(false);
-                    } else {
-                        Toast.makeText(MyApplication.getContext(), res.getMessage(), Toast.LENGTH_LONG).show();
-                    }
+        switch (queryType) {
+            case "collect":
+                service.getCollectTopics().enqueue(callback);
+                break;
+            case "all":
+                service.getTopicList().enqueue(callback);
+                break;
+            default:
+                break;
+        }
+    }
+
+    Callback<Response<List<Topic>>> callback = new Callback<Response<List<Topic>>>() {
+        @Override
+        public void onResponse(Call<Response<List<Topic>>> call, retrofit2.Response<Response<List<Topic>>> response) {
+            if (response.isSuccessful()) {
+                Response<List<Topic>> res = response.body();
+                if (res.isSuccess()) {
+                    res.getData().sort((t1, t2) -> t2.updateDate.compareTo(t1.updateDate));
+                    topicList.clear();
+                    topicList.addAll(res.getData());
+                    adapter.notifyDataSetChanged();
+                    refreshLayout.setRefreshing(false);
+                } else {
+                    Toast.makeText(MyApplication.getContext(), res.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
+        }
 
-            @Override
-            public void onFailure(Call<Response<List<Topic>>> call, Throwable t) {
-                Toast.makeText(MyApplication.getContext(), "网络异常", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
+        @Override
+        public void onFailure(Call<Response<List<Topic>>> call, Throwable t) {
+            Toast.makeText(MyApplication.getContext(), "网络异常", Toast.LENGTH_LONG).show();
+        }
+    };
 
     private void initTopics() {
 //        for (int i = 0; i < 2; i++) {
