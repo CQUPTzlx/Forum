@@ -40,6 +40,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_comment, parent, false);
         ViewHolder holder = new ViewHolder(view);
+//        if (holder.getAdapterPosition() == 0) {
+//            holder.itemView.setBackground(null);
+//        }
         return holder;
     }
 

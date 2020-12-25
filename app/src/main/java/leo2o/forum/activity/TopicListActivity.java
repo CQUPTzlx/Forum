@@ -28,9 +28,9 @@ public class TopicListActivity extends AppCompatActivity {
 
     ForumService service = ServiceFactory.getService(ForumService.class);
 
-    private final List<Topic> topicList = new ArrayList<>();
+    private static final List<Topic> topicList = new ArrayList<>();
 
-    private TopicAdapter adapter;
+    private static TopicAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,11 @@ public class TopicListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public static void insertTopic(Topic topic) {
+        topicList.add(0, topic);
+        adapter.notifyDataSetChanged();
     }
 
     public void loadTopics() {

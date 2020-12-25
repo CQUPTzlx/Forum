@@ -24,7 +24,7 @@ public interface ForumService {
 
     @FormUrlEncoded
     @POST("post")
-    Call<Response<String>> addPost(@Field("content") String content);
+    Call<Response<Topic>> addPost(@Field("content") String content);
 
     @GET("post")
     Call<Response<List<Topic>>> getTopicList();
@@ -37,5 +37,5 @@ public interface ForumService {
 
     @FormUrlEncoded
     @POST("post/{pid}/comment")
-    Call<Response<String>> comment(@Path("pid") int topicId, @Field("content") String content);
+    Call<Response<Comment>> comment(@Path("pid") int topicId, @Field("content") String content);
 }

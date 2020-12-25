@@ -2,12 +2,14 @@ package leo2o.forum.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import leo2o.forum.data.Topic;
 import leo2o.forum.databinding.ActivityAddPostBinding;
 import leo2o.forum.dto.Response;
 import leo2o.forum.utils.MyApplication;
@@ -32,13 +34,14 @@ public class PostAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String content = binding.editPost.getText().toString();
-                service.addPost(content).enqueue(new Callback<Response<String>>() {
+                service.addPost(content).enqueue(new Callback<Response<Topic>>() {
                     @Override
-                    public void onResponse(Call<Response<String>> call, retrofit2.Response<Response<String>> response) {
+                    public void onResponse(Call<Response<Topic>> call, retrofit2.Response<Response<Topic>> response) {
                         if (response.isSuccessful()) {
-                            Response<String> res = response.body();
+                            Response<Topic> res = response.body();
                             if (res.isSuccess()) {
-                                Toast.makeText(v.getContext(), res.getData(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(v.getContext(), "发表成功", Toast.LENGTH_SHORT).show();
+                                TopicListActivity.insertTopic(res.getData());
                                 finish();
                             } else {
                                 Toast.makeText(v.getContext(), res.getMessage(), Toast.LENGTH_SHORT).show();
@@ -47,7 +50,8 @@ public class PostAddActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<Response<String>> call, Throwable t) {
+                    public void onFailure(Call<Response<Topic>> call, Throwable t) {
+                        Log.d("addpost", t.toString());
                         Toast.makeText(MyApplication.getContext(), "网络异常！", Toast.LENGTH_LONG).show();
                     }
                 });
