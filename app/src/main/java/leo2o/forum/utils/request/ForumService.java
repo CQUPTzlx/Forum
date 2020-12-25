@@ -38,6 +38,9 @@ public interface ForumService {
     @POST("collect")
     Call<Response<String>> collect(@Field("pid") int pid);
 
+    @GET("collect/{pid}")
+    Call<Response<Boolean>> isCollect(@Path("pid") int pid);
+
     @GET("post/{pid}")
     Call<Response<Topic>> getTopic(@Path("pid") int topicId);
 

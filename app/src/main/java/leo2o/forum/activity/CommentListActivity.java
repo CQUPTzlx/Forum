@@ -53,6 +53,8 @@ public class CommentListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new CommentAdapter(commentList);
         recyclerView.setAdapter(adapter);
+
+        updateCollectBtn();
         loadTopic();
         loadComments();
 
@@ -95,6 +97,7 @@ public class CommentListActivity extends AppCompatActivity {
                             if (res.isSuccess()) {
 //                                Toast.makeText(v.getContext(), "收藏成功", Toast.LENGTH_SHORT).show();
                                 binding.collectBtn.setText("已收藏");
+                                binding.collectBtn.setClickable(false);
                             } else {
                                 Toast.makeText(v.getContext(), res.getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -106,6 +109,29 @@ public class CommentListActivity extends AppCompatActivity {
                         Toast.makeText(v.getContext(), "网络异常", Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+        });
+    }
+
+    private void updateCollectBtn() {
+        service.isCollect(topicId).enqueue(new Callback<Response<Boolean>>() {
+            @Override
+            public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
+                if (response.isSuccessful()) {
+                    Response<Boolean> res = response.body();
+                    if (res.isSuccess()) {
+                        boolean isCollect = res.getData();
+                        if (isCollect) {
+                            binding.collectBtn.setText("已收藏");
+                            binding.collectBtn.setClickable(false);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response<Boolean>> call, Throwable t) {
+
             }
         });
     }
